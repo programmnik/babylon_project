@@ -1,12 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  experimental: {
-    agentFeedback: true,
+  reactStrictMode: false,
+  output: "export",
+  images: {
+    unoptimized: true,
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Замените "babylon-quest-demo" на точное название вашего репозитория на GitHub:
+  basePath: "/babylon-quest-demo",
   turbopack: {
     rules: {
       "*.css": {
