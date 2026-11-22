@@ -6,8 +6,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // Замените "babylon-quest-demo" на точное название вашего репозитория на GitHub:
-  basePath: "/babylon-quest-demo",
+  basePath: "/babylon_project",
   turbopack: {
     rules: {
       "*.css": {
