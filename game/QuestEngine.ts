@@ -131,6 +131,7 @@ export class QuestEngine {
   public setMoveInput(x: number, z: number) {
     this.moveInput = { x, z };
   }
+  
   public loadLevel(level: QuestLevel, canvas: HTMLCanvasElement) {
     this.currentMode = level.mode;
     this.animatedMeshes = [];
@@ -169,14 +170,21 @@ export class QuestEngine {
 
       buildTableEnvironment(this.scene, this.levelRoot, level.floorColor);
     } else {
-      const cam = new BABYLON.UniversalCamera("fpCam", new BABYLON.Vector3(0, 1.6, -2.1), this.scene);
+      const cam = new BABYLON.UniversalCamera("fpCam", new BABYLON.Vector3(0, 1.6, -3.2), this.scene);
       cam.minZ = 0.1;
       cam.maxZ = 30;
       cam.setTarget(new BABYLON.Vector3(0, 1.15, 1.0));
       cam.attachControl(canvas, true);
       cam.angularSensibility = 3000;
 
-      // Отключаем встроенное движение по взгляду — ходим только через updateWorldAxisMovement()
+      // Один палец по экрану вращает камеру, а ходьба идет только через джойстик
+      const touchInput = cam.inputs.attached.touch as BABYLON.FreeCameraTouchInput | undefined;
+      if (touchInput) {
+        touchInput.touchMoveSensibility = 0;
+        touchInput.singleFingerRotate = true;
+      }
+
+      // Отключаем встроенную ходьбу UniversalCamera (работает только наш updateWorldAxisMovement)
       cam.keysUp = [];
       cam.keysDown = [];
       cam.keysLeft = [];
